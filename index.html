@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Brush Reveal Canvas</title>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/p5.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.6.0/addons/p5.sound.min.js"></script>
+
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      color: #111111;
+    }
+    canvas {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+<script>
+  let bgImg;
+  let blackLayer;
+  let music;
+
+  function preload() {
+    bgImg = loadImage('posterZIP.png');
+    music = loadSound('CommentTeDireAdieu.mp3'); 
+  }
+
+  function setup() {
+    createCanvas(1920, 1080);
+    blackLayer = createGraphics(width, height);
+    blackLayer.background(0);
+    blackLayer.noStroke();
+        
+    volumeSlider = createSlider(0, 1, 1, 0.01); // (min, max, default, step)
+    volumeSlider.position(20, 20);
+    volumeSlider.style('width', '150px');
+  }
+
+  function draw() {
+    image(bgImg, 0, 0, width, height);
+
+    if (mouseIsPressed) {
+      blackLayer.erase();
+      blackLayer.ellipse(mouseX, mouseY, 80, 80);
+      blackLayer.noErase();
+    }
+
+    image(blackLayer, 0, 0);
+  }
+
+  function mousePressed() {
+    if (!music.isPlaying()) {
+      music.loop();
+    }
+  }
+</script>
+</body>
+</html>
